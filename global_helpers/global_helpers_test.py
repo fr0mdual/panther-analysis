@@ -12,14 +12,16 @@ sys.path.append(os.path.dirname(__file__))
 
 import panther_base_helpers as p_b_h  # pylint: disable=C0413
 import panther_tor_helpers as p_tor_h  # pylint: disable=C0413
-import panther_ipinfo_helpers as p_i_h # pylint: disable=C0413
+import panther_ipinfo_helpers as p_i_h  # pylint: disable=C0413
 
 
 class TestBoxParseAdditionalDetails(unittest.TestCase):
     def setUp(self):
         self.initial_dict = {"t": 10, "a": [{"b": 1, "c": 2}], "d": {"e": {"f": True}}}
         self.initial_list = ["1", 2, True, False]
-        self.initial_bytes = b'{"t": 10, "a": [{"b": 1, "c": 2}], "d": {"e": {"f": True}}}'
+        self.initial_bytes = (
+            b'{"t": 10, "a": [{"b": 1, "c": 2}], "d": {"e": {"f": True}}}'
+        )
         self.initial_str = '{"t": 10, "a": [{"b": 1, "c": 2}], "d": {"e": {"f": true}}}'
         self.initial_str_no_json = "this is a plain string"
         self.initial_str_list_json = "[1, 2, 3, 4]"
@@ -116,6 +118,7 @@ class TestTorExitNodes(unittest.TestCase):
             },
         )
 
+
 class TestIpInfoHelpersLocation(unittest.TestCase):
     def setUp(self):
         self.event = {
@@ -129,7 +132,7 @@ class TestIpInfoHelpersLocation(unittest.TestCase):
                         "postal_code": "",
                         "region": "Asia Minor",
                         "region_code": "123",
-                        "timezone": "GMT+03:00"
+                        "timezone": "GMT+03:00",
                     }
                 }
             }
@@ -206,6 +209,7 @@ class TestIpInfoHelpersASN(unittest.TestCase):
         _type = self.ip_info.asn_type("match_field")
         self.assertEqual(_type, "isp")
 
+
 class TestIpInfoHelpers(unittest.TestCase):
     def setUp(self) -> None:
         self.event = {
@@ -220,7 +224,7 @@ class TestIpInfoHelpers(unittest.TestCase):
                         "postal_code": "",
                         "region": "Asia Minor",
                         "region_code": "123",
-                        "timezone": "GMT+03:00"
+                        "timezone": "GMT+03:00",
                     }
                 },
                 "ip-info-asn-cidr": {
@@ -231,8 +235,8 @@ class TestIpInfoHelpers(unittest.TestCase):
                         "route": "1.2.3.4/24",
                         "type": "isp",
                     }
-                }
-            }
+                },
+            },
         }
         self.ipinfo_location = p_i_h.get_ipinfo_location_object(self.event)
         self.ipinfo_asn = p_i_h.get_ipinfo_asn_object(self.event)
@@ -264,10 +268,10 @@ class TestIpInfoHelpers(unittest.TestCase):
                         "postal_code": "",
                         "region": "Asia Minor",
                         "region_code": "123",
-                        "timezone": "GMT+03:00"
+                        "timezone": "GMT+03:00",
                     }
                 }
-            }
+            },
         }
         expected = Exception("Please enable both IPInfo Location and ASN Lookup Tables")
         with self.assertRaises(expected):
